@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="margin-top:100px;">
+    <!-- Shopping cart table -->
+    <div class="card">
+        <div class="card-header" style="width: 100%; text-align: center;">
+            <h2 style="font-weight: 600; color: coral;">CARRITO DE COMPRAS</h2>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive"  >
+                <table class="table table-bordered m-0">
+                    <thead style=" background-color: rgb(240, 239, 239);">
+                        <tr>
+                            <th class="text-center py-3 px-4" style="width: 100px;">Imagen</th>
+                            <th class="text-center py-3 px-4" style="width: 100px;">Producto</th>
+                            <th class="text-center py-3 px-4" style="width: 120px;">Precio</th>
+                            <th class="text-center py-3 px-4" style="width: 100px;">Cantidad</th>
+                            <th class="text-center py-3 px-4" style="width: 100px;">Total</th>
+                            <th class="text-center align-middle py-3 px-0" style="width: 40px;">Acción</th>
+                        </tr>
+                    </thead>
+
+
+
+
+
+
+
+
+
+                    
+                    <tbody style="text-align: center;">
+                        {% for item in order.items.all %}
+                        <tr >
+                            <td class="product-thumbnail">
+                                <img src="{{ item.product.image.url }}" class="img-fluid">
+                            </td>
+                            <td class="product-name">
+                                    <h2 class="h5 text-black">{{ item.product.title }}</h2>
+                                    <small>Postre: {{ item.size.name }}</small>
+                                    <small>Bebida: {{ item.colour.name }}</small>
+                                </td>
+                                <td>s/. {{ item.product.get_price }}</td>
+                                <td >
+                                    <div class="input-group mb-3" style="max-width: 120px;">
+                                        <div class="input-group-pretend">
+                                            <a href="{% url 'cart:decrease-quantity' item.id %}" class="btn btn-outline-danger">
+                                                &minus;
+                                            </a>
+                                        </div>
+                                        <input type="text" class="form-control text-center" value="{{ item.quantity }}">
+                                        <div class="input-group-append">
+                                            <a href="{% url 'cart:increase-quantity' item.id %}" class="btn btn-outline-success">
+                                                &plus;
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    s/. {{ item.get_total_item_price }}
+                                </td>
+                                <td>
+                                    <a class="btn btn-warning" href="{% url 'cart:remove-from-cart' item.id %}" role="button">x</a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="6">
+                                    No hay artículos en su carrito. 
+                                    <a class="btn btn-outline-info btn-sm btn-block" href="{% url 'cart:product-list' %}">COMPRAR AHORA</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+        <!-- productos totales para pago -->
+        {% if order.items.count > 0 %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row mb-5">
+                    <div class="col-md-12" style="margin-top: 20px;">
+                        <a class="btn btn-outline-info btn-sm btn-block" href="{% url 'cart:product-list' %}">SEGUIR COMPRANDO</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 pl-5">
+                <div class="row justify-content-end">
+                    <div class="col-md-12">
+                        <div class="row" style="margin-top: 50px;">
+                            <div class="col-md-12  border-bottom mb-1">
+                                <h3 class="text-center">TOTAL</h3>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <span class="text-black">Subtotal</span>
+                            </div>
+
+                            <div class="col-md-6 text-right">
+                                <strong class="text-black">s/. {{ order.get_subtotal }}</strong>
+                            </div>
+                        </div>
+
+                        <div class="row mb-5">
+                            <div class="col-md-6">
+                                <span class="text-black">Total</span>
+                            </div>
+
+                            <div class="col-md-6 text-right">
+                                <strong class="text-black">s/. {{ order.get_total }}</strong>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="{% url 'cart:checkout' %}" class="btn btn-warning btn-lg py-3 btn-block">Proceed to Checkout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}
+
+
+
+
+
+

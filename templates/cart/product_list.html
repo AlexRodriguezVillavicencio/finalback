@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="col-md-3 mb-4">
+    <div class="border p-4 rounded mb-4">
+        <h3 class="h6 text-uppercasse text-black">Categories</h3>
+        <ul>
+            {% for category in categories %}
+            <li class="mb-1">
+                <a href="?category={{ category.name }}" class="d-flex">
+                    <img src="{{ category.image.url }}" width="50px">
+                    <span>{{ category.name }}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<section class="flayer-principal">
+    <div>
+        <img src="{%static 'images/principalflayer.jpg' %}" alt="">
+    </div>
+</section>
+<section class="container" style="padding-top: 20px; padding-bottom: 50px;" >
+    <div>
+        <h3 style="text-align: center; padding-bottom: 50px; text-transform:uppercase; font-weight: 700; color: coral;">{{category.name}}jk</h3>
+        
+    </div>  
+
+    <div style="display: flex; flex-flow: row wrap; justify-content: space-around;">
+        {% for product in object_list %}
+        <div class="card-product">
+            <a href="{{product.get_absolute_url}}" class="ms-item-container">
+                <!-- Product image-->
+                <img class="card-img-top" src="{{ product.image.url }}" alt="..."  style="max-width: 500px; height:300px;" />
+                <!-- Product details-->
+                <h5 class="fw-bolder">{{ product.title }}</h5>
+                <p>S/. {{product.price}}</p> 
+            </a>                  
+        </div>
+    {% endfor %}
+    </div>
+</section>
+
+
+{% endblock content %}
