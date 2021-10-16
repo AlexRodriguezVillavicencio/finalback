@@ -52,13 +52,13 @@ class ProductDetailView(generic.FormView):
 
         item_filter = order.items.filter(
             product=product,
-            colour=form.cleaned_data['colour'],
-            size=form.cleaned_data['size']
+            bebida=form.cleaned_data['bebida'],
+            postre=form.cleaned_data['postre']
         )
 
         if item_filter.exists():
             item = item_filter.first()
-            item.quantity += int(form.cleaned_data['quantity'])
+            item.cantidad += int(form.cleaned_data['cantidad'])
             item.save()
 
         else:
@@ -88,7 +88,7 @@ class CartView(generic.TemplateView):
 class IncreaseQuantityView(generic.View):
     def get(self, request, *args, **kwargs):
         order_item = get_object_or_404(OrderItem, id=kwargs['pk'])
-        order_item.quantity += 1
+        order_item.cantidad += 1
         order_item.save()
         return redirect("cart:summary")
 
@@ -97,10 +97,10 @@ class DecreaseQuantityView(generic.View):
     def get(self, request, *args, **kwargs):
         order_item = get_object_or_404(OrderItem, id=kwargs['pk'])
 
-        if order_item.quantity <= 1:
+        if order_item.cantidad <= 1:
             order_item.delete()
         else:
-            order_item.quantity -= 1
+            order_item.cantidad -= 1
             order_item.save()
         return redirect("cart:summary")
 
@@ -131,7 +131,6 @@ class CheckoutView(generic.FormView):
                 address_type = 'S',
                 user = self.request.user,
                 address_line_1=form.cleaned_data['shipping_address_line_1'],
-                address_line_2=form.cleaned_data['shipping_address_line_2'],
                 zip_code=form.cleaned_data['shipping_zip_code'],
                 city=form.cleaned_data['shipping_city'],
             )
@@ -144,7 +143,6 @@ class CheckoutView(generic.FormView):
                 address_type = 'B',
                 user = self.request.user,
                 address_line_1=form.cleaned_data['billing_address_line_1'],
-                address_line_2=form.cleaned_data['billing_address_line_2'],
                 zip_code=form.cleaned_data['billing_zip_code'],
                 city=form.cleaned_data['billing_city'],
             )

@@ -1,0 +1,10 @@
+.img-modificada{
+    max-width: 80px;
+}
+
+@media (max-width:576px){
+    .img-modificada{
+        max-width:60px;
+        margin-top: 10px;
+    }
+}

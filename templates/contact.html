@@ -7,9 +7,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 mb-0">
-                <a href={% url 'home' %}">Home</a>
+                <a href={% url 'home' %}">Inicio</a>
                 <span class="mx-2 mb-0">/</span>
-                <strong class="text-block">Contact</strong>
+                <strong class="text-block">Contacto</strong>
             </div>
         </div>
     </div>
@@ -19,14 +19,14 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-7">
-                <h2 class="h3 mb-3 text-black">Get in touch</h2>
+                <h2 class="h3 mb-3 text-center">Contactanos!</h2>
             </div>
 
             <div class="col-md-7">
                 <form method="POST">
                     {% csrf_token %}
                     {{ form|crispy }}
-                    <input type="submit" class="btn btn-primary btn-lg btn-block" value="Submit message"/>
+                    <input type="submit" class="btn btn-warning btn-lg btn-block" value="Enviar mensaje"/>
                 </form>
             </div>
         </div>

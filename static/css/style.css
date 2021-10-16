@@ -27,7 +27,6 @@ a {
   -webkit-transition: .3s all ease-in-out;
   -o-transition: .3s all ease-in-out;
   transition: .3s all ease-in-out;
-  background: rgba(0, 0, 0, 0.6);
   content: "";
   position: absolute;
   z-index: 2000;
@@ -133,7 +132,6 @@ a {
 
 /* Navbar */
 .site-navbar {
-  background: #fff;
   margin-bottom: 0px;
   z-index: 1999;
   position: relative; }

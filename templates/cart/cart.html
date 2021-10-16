@@ -35,12 +35,13 @@
                         {% for item in order.items.all %}
                         <tr >
                             <td class="product-thumbnail">
-                                <img src="{{ item.product.image.url }}" class="img-fluid">
+                                <img style="max-width:120px ;max-height:90px" src="{{ item.product.image.url }}" class="img-fluid">
                             </td>
                             <td class="product-name">
                                     <h2 class="h5 text-black">{{ item.product.title }}</h2>
-                                    <small>Postre: {{ item.size.name }}</small>
-                                    <small>Bebida: {{ item.colour.name }}</small>
+                                    <small>Postre: {{ item.bebida.name }}</small>
+                                    <br>
+                                    <small>Bebida: {{ item.postre.name }}</small>
                                 </td>
                                 <td>s/. {{ item.product.get_price }}</td>
                                 <td >
@@ -50,7 +51,7 @@
                                                 &minus;
                                             </a>
                                         </div>
-                                        <input type="text" class="form-control text-center" value="{{ item.quantity }}">
+                                        <input type="text" class="form-control text-center" value="{{ item.cantidad }}">
                                         <div class="input-group-append">
                                             <a href="{% url 'cart:increase-quantity' item.id %}" class="btn btn-outline-success">
                                                 &plus;
@@ -111,7 +112,7 @@
 
                         <div class="row mb-5">
                             <div class="col-md-6">
-                                <span class="text-black">Total</span>
+                                <span class="text-black">Total<p style="color: brown;">(Subtotal + IGV)</p></span>
                             </div>
 
                             <div class="col-md-6 text-right">

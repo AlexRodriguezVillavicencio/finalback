@@ -1,32 +1,32 @@
 from django import forms
-from .models import OrderItem, ColourVariation, Product, SizeVariation, Address
+from .models import OrderItem, BebidaVariation, Product, PostreVariation, Address
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
 class AddToCartForm(forms.ModelForm):
-    colour = forms.ModelChoiceField(queryset=ColourVariation.objects.none())
-    size = forms.ModelChoiceField(queryset=SizeVariation.objects.none())
-    quantity = forms.IntegerField(min_value=1)
+    bebida = forms.ModelChoiceField(queryset=BebidaVariation.objects.none())
+    postre = forms.ModelChoiceField(queryset=PostreVariation.objects.none())
+    cantidad = forms.IntegerField(min_value=1)
 
     class Meta:
         model = OrderItem
-        fields = ['quantity', 'colour', 'size']
+        fields = ['cantidad', 'bebida', 'postre']
 
     def __init__(self, *args, **kwargs):
         self.product_id = kwargs.pop('product_id')
         product = Product.objects.get(id=self.product_id)
         super().__init__(*args, **kwargs)
 
-        self.fields['colour'].queryset = product.available_colours.all()
-        self.fields['size'].queryset = product.available_sizes.all()
+        self.fields['bebida'].queryset = product.bebidas.all()
+        self.fields['postre'].queryset = product.postres.all()
 
     def clean(self):
         product_id = self.product_id
         product = Product.objects.get(id=self.product_id)
-        quantity = self.cleaned_data['quantity']
+        cantidad = self.cleaned_data['cantidad']
 
-        if product.stock < quantity:
+        if product.stock < cantidad:
             raise forms.ValidationError(f"The maximum stock is {product.stock}")
 
 
@@ -34,14 +34,10 @@ class AddToCartForm(forms.ModelForm):
 class AddressForm(forms.Form):
     
     shipping_address_line_1 = forms.CharField(required=False)
-    shipping_address_line_2 = forms.CharField(required=False)
+
     shipping_zip_code = forms.CharField(required=False)
     shipping_city = forms.CharField(required=False)
 
-    billing_address_line_1 = forms.CharField(required=False)
-    billing_address_line_2 = forms.CharField(required=False)
-    billing_zip_code = forms.CharField(required=False)
-    billing_city = forms.CharField(required=False)
 
     selected_shipping_address = forms.ModelChoiceField(
         Address.objects.none(), required=False
@@ -78,8 +74,6 @@ class AddressForm(forms.Form):
         if selected_shipping_address is None:
             if not data.get('shipping_address_line_1', None):
                 self.add_error("shipping_address_line_1", "Please fill in this field")
-            if not data.get('shipping_address_line_2', None):
-                self.add_error("shipping_address_line_2", "Please fill in this field")
             if not data.get('shipping_zip_code', None):
                 self.add_error("shipping_zip_code", "Please fill in this field")
             if not data.get('shipping_city', None):
@@ -89,8 +83,6 @@ class AddressForm(forms.Form):
         if selected_billing_address is None:
             if not data.get('billing_address_line_1', None):
                 self.add_error("billing_address_line_1", "Please fill in this field")
-            if not data.get('billing_address_line_2', None):
-                self.add_error("billing_address_line_2", "Please fill in this field")
             if not data.get('billing_zip_code', None):
                 self.add_error("billing_zip_code", "Please fill in this field")
             if not data.get('billing_city', None):
