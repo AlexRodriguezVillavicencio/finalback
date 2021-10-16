@@ -20,7 +20,13 @@
                     <form method="POST">
                         {% csrf_token %}
                         {{ form|crispy }}
-                        <button type='submit' class="btn btn-sm btn-primary">Add to Cart</button>
+                        
+                        <button type='submit' class="btn btn-sm btn-success">AGREGAR AL CARRITO</button>
+                        
+                        
+                        
+                        
+                        
                     </form>
                     
                     {% else %}

@@ -29,7 +29,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
 
     'crispy_forms',
-
     'core',
     'cart',
 ]
@@ -104,7 +103,7 @@ ACCOUNT_USERNAME_REQUIRED =False
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = '/'
-LANGUAGE_CODE = 'es'
+LANGUAGE_CODE = 'en'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
@@ -135,7 +134,7 @@ if DEBUG is False:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-    ALLOWED_HOSTS = ['https://datadosis.com']
+    ALLOWED_HOSTS = ['*']
 
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 

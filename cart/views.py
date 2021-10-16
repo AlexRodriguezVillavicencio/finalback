@@ -122,7 +122,7 @@ class CheckoutView(generic.FormView):
     def form_valid(self, form):
         order = get_or_set_order_session(self.request)
         selected_shipping_address = form.cleaned_data.get('selected_shipping_address')
-        selected_billing_address = form.cleaned_data.get('selected_billing_address')
+      
 
         if selected_shipping_address:
             order.shipping_address = selected_shipping_address
@@ -136,21 +136,11 @@ class CheckoutView(generic.FormView):
             )
             order.shipping_address = address
 
-        if selected_billing_address:
-            order.billing_address = selected_billing_address
-        else:
-            address = Address.objects.create(
-                address_type = 'B',
-                user = self.request.user,
-                address_line_1=form.cleaned_data['billing_address_line_1'],
-                zip_code=form.cleaned_data['billing_zip_code'],
-                city=form.cleaned_data['billing_city'],
-            )
-            order.billing_address = address
+       
 
         order.save()
         messages.info(
-            self.request, "You have successfully added your addresses")
+            self.request, "Ha agregado correctamente su dirección")
         return super(CheckoutView, self).form_valid(form)
 
     def get_form_kwargs(self):
